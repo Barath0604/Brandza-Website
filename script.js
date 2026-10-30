@@ -1,0 +1,8 @@
+const menuButton=document.querySelector('.menu-toggle');
+const nav=document.querySelector('.site-nav');
+menuButton.addEventListener('click',()=>{const open=menuButton.getAttribute('aria-expanded')!=='true';menuButton.setAttribute('aria-expanded',String(open));menuButton.setAttribute('aria-label',open?'Close menu':'Open menu');nav.classList.toggle('open',open)});
+nav.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{nav.classList.remove('open');menuButton.setAttribute('aria-expanded','false');menuButton.setAttribute('aria-label','Open menu')}));
+document.querySelectorAll('.filter').forEach(button=>button.addEventListener('click',()=>{document.querySelector('.filter.active')?.classList.remove('active');button.classList.add('active');const filter=button.dataset.filter;document.querySelectorAll('.project-card').forEach(card=>{card.hidden=filter!=='all'&&card.dataset.category!==filter})}));
+document.querySelectorAll('#year,.year').forEach(node=>node.textContent=new Date().getFullYear());
+const enquiryForm=document.getElementById('enquiry-form');
+if(enquiryForm){enquiryForm.addEventListener('submit',event=>{event.preventDefault();const data=new FormData(enquiryForm);const subject=encodeURIComponent(`Brandza enquiry — ${data.get('service')}`);const body=encodeURIComponent(`Name: ${data.get('name')}\nEmail: ${data.get('email')}\nService: ${data.get('service')}\n\nProject details:\n${data.get('message')}`);window.location.href=`mailto:hello@brandza.in?subject=${subject}&body=${body}`;document.getElementById('form-status').textContent='Your email app should open with the enquiry prepared. Update hello@brandza.in in the page code if your contact email is different.'})}
